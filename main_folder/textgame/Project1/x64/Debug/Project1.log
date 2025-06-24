@@ -1,1 +1,8 @@
-﻿  Project1.vcxproj -> C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\x64\Debug\Project1.exe
+﻿  main.cpp
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main.cpp(41,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main.cpp(41,22): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main.cpp(62,9): warning C4101: 'rx' :참조되지 않은 지역 변수입니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main.cpp(62,13): warning C4101: 'ry' :참조되지 않은 지역 변수입니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main.cpp(63,9): warning C4101: 'rc' :참조되지 않은 지역 변수입니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main.cpp(64,9): warning C4101: 'key' :참조되지 않은 지역 변수입니다.
+  Project1.vcxproj -> C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\x64\Debug\Project1.exe

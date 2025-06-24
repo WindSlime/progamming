@@ -67,21 +67,4 @@ void ingame() {
     setColor(WHITE); gotoxy(10, 6); printf("     인게임 화면 입니다.");
     setColor(D_BLUE); gotoxy(10, 7); printf("==========================");
 
-    system("cls");
-    setColor(WHITE); printf("Clear Screen 후 랜덤한 위치에서 색 랜덤하게 Hello 출력");
-    Sleep(2000);
-
-    while (1) {
-        Sleep(500);
-        rx = rand() % 80; //0~79
-        ry = rand() % 25; //0~24
-        rc = rand() % 15 + 1; //0~14 + 1 = 1~15
-
-        setColor(rc); gotoxy(rx, ry); printf("Hello");
-
-        if (_kbhit() == 1) {
-            key = _getch();
-            if (key == 'q' || key == 'Q') break;
-        }
-    }
 }

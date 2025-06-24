@@ -5,9 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,20 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "\uCC38\uC870\uCF54\uB4DC.cpp",
-              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "ViewState": "AgIAADEAAAAAAAAAAAAcwFYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-24T00:18:36.892Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -39,7 +24,7 @@
               "RelativeDocumentMoniker": "Project1\\main.cpp",
               "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp",
               "RelativeToolTip": "Project1\\main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAEYAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-24T00:18:29.492Z",
               "EditorCaption": ""
