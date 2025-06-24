@@ -47,8 +47,8 @@ void setColor(int color) {
 void setup() {
     srand((unsigned int)time(NULL));
 
-    system("title Text Based Game");
-    system("mode con:cols=80 lines=25");
+    system("title sex"); //cmd Á¦¸ñ
+    system("mode con:cols=200 lines=180");
 }
 void title() {
     setColor(BLUE); gotoxy(10, 5); printf("==========================");
