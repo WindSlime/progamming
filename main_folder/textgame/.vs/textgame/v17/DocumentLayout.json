@@ -1,14 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\",
+  "WorkspaceRootPath": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\\uCC38\uC870\uCF54\uB4DC.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,30 +14,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "\uCC38\uC870\uCF54\uB4DC.cpp",
-              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "RelativeDocumentMoniker": "Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "RelativeToolTip": "Project1\\\uCC38\uC870\uCF54\uB4DC.cpp",
-              "ViewState": "AgIAADEAAAAAAAAAAAAcwFYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-24T00:18:36.892Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\main.cpp",
+              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp",
               "RelativeDocumentMoniker": "Project1\\main.cpp",
-              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\OneDrive\\Desktop\\main_folder\\textgame\\Project1\\main.cpp",
+              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp",
               "RelativeToolTip": "Project1\\main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-24T00:18:29.492Z",
               "EditorCaption": ""

@@ -18,8 +18,5 @@
     <ClCompile Include="main.cpp">
       <Filter>리소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="참조코드.cpp">
-      <Filter>리소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
