@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp",
-              "RelativeDocumentMoniker": "Project1\\main.cpp",
-              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main.cpp",
-              "RelativeToolTip": "Project1\\main.cpp",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAADIAAAAnAAAAAAAAAA==",
+              "Title": "main2.cpp",
+              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main2.cpp",
+              "RelativeDocumentMoniker": "Project1\\main2.cpp",
+              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main2.cpp",
+              "RelativeToolTip": "Project1\\main2.cpp",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAAAIIAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-24T00:18:29.492Z",
+              "WhenOpened": "2025-06-26T22:58:42.17Z",
               "EditorCaption": ""
             }
           ]
