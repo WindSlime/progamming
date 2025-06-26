@@ -43,6 +43,8 @@ void setColor(int color) {
 // 콘솔 환경 설정
 void setup() {
     srand((unsigned int)time(NULL));
+
+    system("title Main");
     system("mode con: cols=120 lines=35");
     system("cls");
 }
