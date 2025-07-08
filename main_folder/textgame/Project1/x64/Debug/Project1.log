@@ -1,4 +1,12 @@
-﻿  smaple2.cpp
-C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\smaple2.cpp(274,13): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\smaple2.cpp(338,13): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  main2.cpp
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(180,13): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(198,26): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(246,56): warning C4566: 유니버설 문자 이름 '\u2554'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(246,111): warning C4566: 유니버설 문자 이름 '\u2550'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(246,126): warning C4566: 유니버설 문자 이름 '\u2557'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(247,56): warning C4566: 유니버설 문자 이름 '\u2551'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(247,124): warning C4566: 유니버설 문자 이름 '\u2551'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(248,56): warning C4566: 유니버설 문자 이름 '\u255A'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(248,111): warning C4566: 유니버설 문자 이름 '\u2550'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
+C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\Project1\main2.cpp(248,126): warning C4566: 유니버설 문자 이름 '\u255D'(으)로 표현되는 문자는 현재 코드 페이지(949)에서 표현할 수 없습니다.
   Project1.vcxproj -> C:\Users\문태호\Documents\GitHub\progamming\main_folder\textgame\x64\Debug\Project1.exe
