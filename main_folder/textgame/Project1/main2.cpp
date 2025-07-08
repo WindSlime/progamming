@@ -1,167 +1,288 @@
-    #include <stdio.h>
-    #include <conio.h>
-    #include <windows.h>
-    #include <time.h>
-    #include <stdlib.h>
+ï»¿#include <iostream>     // std::cin
+#include <string>       // std::string
+#include <windows.h>    // SetConsoleCursorPosition, GetStdHandle, COORD, GetAsyncKeyState, SetConsoleTextAttribute, SetConsoleOutputCP ë“±
+#include <chrono>       // ì‹œê°„ ì¸¡ì • (std::chrono)
+#include <thread>       // std::this_thread::sleep_for
+#include <limits>       // std::numeric_limits
+#include <conio.h>      // _getch()
 
-    // ÄÜ¼Ö »ö»ó Á¤ÀÇ
-    enum {
-        BLACK, D_BLUE, D_GREEN, D_SKYBLUE, D_RED, D_VIOLET, D_YELLOW,
-        GRAY, D_GRAY, BLUE, GREEN, SKYBLUE, RED, VIOLET, YELLOW, WHITE
+// ====================================================================
+// ìœ í‹¸ë¦¬í‹° í•¨ìˆ˜ë“¤ (ì½˜ì†” í™”ë©´ ì œì–´)
+// ====================================================================
+
+// ì»¤ì„œ ìœ„ì¹˜ ì„¤ì • í•¨ìˆ˜
+void SetCursorPosition(int x, int y) {
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+// í™”ë©´ ì§€ìš°ê¸° í•¨ìˆ˜
+void ClearScreen() {
+    system("cls"); // Windows
+}
+
+// í…ìŠ¤íŠ¸ ìƒ‰ìƒ ì„¤ì • í•¨ìˆ˜ (Windows ì „ìš©)
+void SetTextColor(WORD color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
+// í…ìŠ¤íŠ¸ ìƒ‰ìƒ ì´ˆê¸°í™” í•¨ìˆ˜ (Windows ì „ìš©)
+// ì´ í•¨ìˆ˜ëŠ” í˜¸ì¶œë  ë•Œë§ˆë‹¤ ì½˜ì†”ì˜ ê¸°ë³¸ í°ìƒ‰ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+void ResetTextColor() {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+}
+
+// ====================================================================
+// ê²Œì„ ì—”í‹°í‹° (ëª¬ìŠ¤í„°)
+// ====================================================================
+
+struct Monster {
+    std::string name;
+    int health;
+    int attack;
+};
+
+// ====================================================================
+// í™”ë©´ ì¶œë ¥ í•¨ìˆ˜ë“¤
+// ====================================================================
+
+void DisplayMainMenu() {
+    ClearScreen();
+    SetCursorPosition(30, 5);   printf("===========================\n");
+    SetCursorPosition(30, 6);   printf("       ì–¸ë”í…Œì¼ ìŠ¤íƒ€ì¼ ê²Œì„\n");
+    SetCursorPosition(30, 7);   printf("===========================\n");
+    SetCursorPosition(30, 9);   printf("1. ê²Œì„ ì‹œì‘\n");
+    SetCursorPosition(30, 10);  printf("2. ê²Œì„ ì„¤ëª…\n");
+    SetCursorPosition(30, 11);  printf("3. ê²Œì„ ì¢…ë£Œ\n");
+    SetCursorPosition(30, 13);  printf("ë©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš”: ");
+}
+
+void DisplayGameScreen(const Monster& currentMonster, const char* playerActionMessage = "") {
+    ClearScreen();
+
+    SetCursorPosition(40 - (int)(currentMonster.name.length() * 0.7), 5);
+    printf("---------------\n");
+    SetCursorPosition(40 - (int)(currentMonster.name.length() * 0.7), 6);
+    printf("%s\n", currentMonster.name.c_str());
+    SetCursorPosition(40 - (int)(currentMonster.name.length() * 0.7), 7);
+    printf("HP: %d\n", currentMonster.health);
+    SetCursorPosition(40 - (int)(currentMonster.name.length() * 0.7), 8);
+    printf("---------------\n");
+
+    SetCursorPosition(5, 20); printf("í”Œë ˆì´ì–´ HP: 100\n");
+    SetCursorPosition(5, 21); printf("ê³¨ë“œ: 0\n");
+
+    SetCursorPosition(5, 15); printf("%s\n", playerActionMessage);
+
+    SetCursorPosition(20, 23); printf("----------------------------------------\n");
+    SetCursorPosition(20, 24); printf("        [ê³µê²© íƒ€ì´ë° ëŒ€ê¸°ì¤‘...]         \n");
+    SetCursorPosition(20, 25); printf("----------------------------------------\n");
+}
+
+// ====================================================================
+// ì „íˆ¬ ì‹œìŠ¤í…œ í•¨ìˆ˜ - ì–¸ë”í…Œì¼ 'íŠ¼íŠ¼í•œ ì¥ê°‘' ìŠ¤íƒ€ì¼
+// ====================================================================
+
+int PerformAttack(Monster& targetMonster) {
+    int totalDamage = 0;
+    int hitCount = 0;
+    const int maxHits = 4;
+
+    int barY = 24;
+    int barStartX = 25;
+    int barLength = 30;
+
+    struct HitZone {
+        int startX;
+        int length;
     };
+    HitZone currentHitZone = { barStartX + 14, 2 };
 
-    // ÇÔ¼ö ¼±¾ğ
-    void gotoxy(int x, int y);
-    void setColor(int color);
-    void setup();
-    void title();
-    void intro();
-    void stage1();
-    void stage2();
-    void waitForEnter();
-    void printDialogueWithNPC(const char* speaker[], const char* lines[], int lineCount, int startX, int startY);
+    ClearScreen();
+    DisplayGameScreen(targetMonster, "ê³µê²©! Spacebarë¥¼ ëˆ„ë¥´ì„¸ìš”!");
 
-    // ¸ŞÀÎ ÇÔ¼ö
-    int main() {
-        setup();
-        title();
-        intro();
-        stage1();
-        stage2();
-        return 0;
-    }
+    SetCursorPosition(barStartX - 5, barY - 1);
+    printf("GOOD");
+    SetCursorPosition(barStartX - 5, barY + 1);
+    printf("PERFECT");
 
-    // Ä¿¼­ ÀÌµ¿
-    void gotoxy(int x, int y) {
-        COORD pos = { x, y };
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-    }
+    // ê²Œì´ì§€ ë°” ì „ì²´ í…Œë‘ë¦¬ ê·¸ë¦¬ê¸°
+    SetCursorPosition(barStartX - 2, barY - 1); printf("â•”");
+    for (int i = 0; i < barLength + 2; ++i) printf("â•");
+    printf("â•—\n");
+    SetCursorPosition(barStartX - 2, barY); printf("â•‘");
+    for (int i = 0; i < barLength + 2; ++i) printf(" ");
+    printf("â•‘\n");
+    SetCursorPosition(barStartX - 2, barY + 1); printf("â•š");
+    for (int i = 0; i < barLength + 2; ++i) printf("â•");
+    printf("â•\n");
 
-    // »ö»ó ¼³Á¤
-    void setColor(int color) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-    }
+    SetCursorPosition(barStartX - 2, barY + 4);
+    printf("ë‚¨ì€ ê³µê²© íšŸìˆ˜: %d / %d", maxHits - hitCount, maxHits);
 
-    // ÄÜ¼Ö È¯°æ ¼¼ÆÃ
-    void setup() {
-        srand((unsigned int)time(NULL));
+    for (int i = 0; i < maxHits; ++i) {
+        auto startTime = std::chrono::high_resolution_clock::now();
+        int currentPosition = 0;
 
-        system("title Main");
-        system("mode con: cols=120 lines=35");
-        system("cls");
-    }
+        SetCursorPosition(5, 15);
+        printf("ê³µê²© %d/%d: íƒ€ì´ë°ì— ë§ì¶° Spacebarë¥¼ ëˆ„ë¥´ì„¸ìš”!\n", i + 1, maxHits);
 
-    // Å¸ÀÌÆ² Ãâ·Â
-    void title() {
-        setColor(RED); gotoxy(40, 10); printf("==============================================");
-        setColor(WHITE); gotoxy(50, 12); printf("°ÔÀÓ Á¦¸ñ");
-        setColor(D_YELLOW); gotoxy(50, 13); printf("ºÎÁ¦");
-        setColor(RED); gotoxy(40, 15); printf("==============================================");
-        gotoxy(50, 17); setColor(WHITE); printf("¾Æ¹« Å°³ª ´­·¯ ½ÃÀÛ");
-        _getch();
-        system("cls");
-    }
+        bool inputReceived = false;
+        while (!inputReceived) {
+            auto currentTime = std::chrono::high_resolution_clock::now();
+            long long elapsedMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count();
 
-// ´ë»ç Ãâ·Â ÇÔ¼ö - NPC Æ÷ÇÔ
-void printDialogueWithNPC(const char* speaker[], const char* lines[], int lineCount, int startX, int startY) {
-    for (int i = 0; i < lineCount; i++) {
-        system("cls");
-        gotoxy(startX, startY);
-        setColor(WHITE);
-        printf("[%s] : %s", speaker[i], lines[i]);
+            currentPosition = (elapsedMilliseconds / (600 / barLength)) % barLength;
 
-        gotoxy(startX, startY + 2);
-        setColor(D_GRAY);
-        printf("´ÙÀ½ ´ë»ç¸¦ º¸·Á¸é [Enter] Å°¸¦ ´©¸£¼¼¿ä");
+            SetCursorPosition(barStartX, barY);
 
-        while (1) {
-            if (_kbhit()) {
-                char key = _getch();
-                if (key == 13) break;
+            for (int k = 0; k < barLength; ++k) {
+                bool inHitZone = (k >= (currentHitZone.startX - barStartX) && k < (currentHitZone.startX - barStartX + currentHitZone.length));
+
+                if (k == currentPosition) {
+                    SetTextColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY); // ë°ì€ ë…¸ë€ìƒ‰ ì»¤ì„œ
+                    printf("â–¶");
+                }
+                else if (inHitZone) {
+                    SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY); // ë°ì€ ì´ˆë¡ìƒ‰ ì„±ê³µ êµ¬ê°„
+                    printf("â– ");
+                }
+                else {
+                    SetTextColor(FOREGROUND_INTENSITY); // ì–´ë‘ìš´ íšŒìƒ‰
+                    printf("â”€");
+                }
+                ResetTextColor(); // ìƒ‰ìƒ ì´ˆê¸°í™”
             }
+
+            if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+                inputReceived = true;
+                SetCursorPosition(barStartX, barY + 2);
+
+                if (currentPosition >= (currentHitZone.startX - barStartX) && currentPosition < (currentHitZone.startX - barStartX + currentHitZone.length)) {
+                    hitCount++;
+                    SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                    printf("íƒ€ì´ë° ì„±ê³µ!                 ");
+                    ResetTextColor();
+                }
+                else {
+                    SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+                    printf("íƒ€ì´ë° ì‹¤íŒ¨!                 ");
+                    ResetTextColor();
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            }
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(30));
         }
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        SetCursorPosition(barStartX - 2, barY + 4);
+        printf("ë‚¨ì€ ê³µê²© íšŸìˆ˜: %d / %d", maxHits - (i + 1), maxHits);
     }
+
+    SetCursorPosition(5, 15);
+    printf("                                                     ");
+
+    SetCursorPosition(barStartX, barY + 3);
+    printf("                                                                  ");
+
+    if (hitCount == maxHits) {
+        totalDamage = targetMonster.attack * 3;
+        SetTextColor(FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+        printf("ì™„ë²½í•œ ê³µê²©! ëª¨ë“  íƒ€ì´ë°ì— ì„±ê³µí•˜ì—¬ ì—„ì²­ë‚œ ë°ë¯¸ì§€ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤!\n");
+    }
+    else if (hitCount > 0) {
+        totalDamage = targetMonster.attack + (hitCount * 10);
+        SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+        printf("íƒ€ê²© ì„±ê³µ! ì´ %dë²ˆ ëª…ì¤‘í•˜ì—¬ ë°ë¯¸ì§€ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\n", hitCount);
+    }
+    else {
+        totalDamage = targetMonster.attack / 4;
+        SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+        printf("ê³µê²©ì´ ëª¨ë‘ ë¹—ë‚˜ê°”ìŠµë‹ˆë‹¤. ì•„ì£¼ ë‚®ì€ ë°ë¯¸ì§€!\n");
+    }
+    ResetTextColor();
+
+    targetMonster.health -= totalDamage;
+    std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+
+    return totalDamage;
 }
 
-// ÀÎÆ®·Î È­¸é
-void intro() {
-    const char* npcNames[] = {
-        "³ª·¹ÀÌ¼Ç", "³ª·¹ÀÌ¼Ç", "³ª·¹ÀÌ¼Ç", "³ª·¹ÀÌ¼Ç"
-    };
-    const char* introLines[] = {
-        "´ë»ç1",
-        "´ë»ç2",
-        "´ë»ç3",
-        "´ë»ç4"
-    };
-    int numLines = sizeof(introLines) / sizeof(introLines[0]);
-    printDialogueWithNPC(npcNames, introLines, numLines, 5, 5);
-}
+// ====================================================================
+// ë©”ì¸ ê²Œì„ ë£¨í”„
+// ====================================================================
 
-// ¿£ÅÍ Å° ´ë±â
-void waitForEnter() {
-    gotoxy(5, 25); setColor(D_GRAY);
-    printf("°è¼ÓÇÏ·Á¸é [Enter] Å°¸¦ ´©¸£¼¼¿ä");
-    while (1) {
-        if (_kbhit()) {
-            char key = _getch();
-            if (key == 13) break;
+int main() {
+    // ì½˜ì†”ì—ì„œ í•œê¸€ì„ ì˜¬ë°”ë¥´ê²Œ ì¶œë ¥í•˜ê¸° ìœ„í•œ ì„¤ì • (Windows ì „ìš©)
+    SetConsoleOutputCP(CP_UTF8);
+
+    int choice;
+    Monster slime = { "ìŠ¬ë¼ì„", 50, 10 };
+
+    do {
+        DisplayMainMenu();
+        std::cin >> choice;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+            SetCursorPosition(30, 14);
+            printf("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•´ì£¼ì„¸ìš”.\n");
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            continue;
         }
-    }
-}
 
-// ½ºÅ×ÀÌÁö 1 ¸¶À»
-void stage1() {
-    const char* npcNames[] = {
-        "ÀÇ½É ¸¹Àº ÁÖ¹Î", "ÇÃ·¹ÀÌ¾î", "ÀÇ½É ¸¹Àº ÁÖ¹Î"
-    };
-    const char* stageLines[] = {
-        "´ë»ç1(ÁÖ¹Î)",
-        "´ë»ç2(ÇÃ·¹ÀÌ¾î)",
-        "´ë»ç3(ÁÖ¹Î)"
-    };
-    int numLines = sizeof(stageLines) / sizeof(stageLines[0]);
-    printDialogueWithNPC(npcNames, stageLines, numLines, 5, 5);
+        switch (choice) {
+        case 1:
+            if (slime.health <= 0) {
+                ClearScreen();
+                SetCursorPosition(30, 10);
+                printf("ì´ë¯¸ ìŠ¬ë¼ì„ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤! ë‹¤ìŒ ìŠ¤í…Œì´ì§€ë¥¼ ì¤€ë¹„í•˜ì„¸ìš”.\n");
+                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                continue;
+            }
 
-    gotoxy(5, 10); setColor(WHITE); printf("1. ¼±ÅÃÁö1");
-    gotoxy(5, 11); printf("2. ¼±ÅÃÁö2");
-    gotoxy(5, 13); printf("¼±ÅÃ : ");
+            DisplayGameScreen(slime, "ìŠ¬ë¼ì„ì´ ë‚˜íƒ€ë‚¬ë‹¤!");
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            PerformAttack(slime);
 
-    char choice;
-    while (1) {
-        choice = _getch();
-        if (choice == '1') {
-            system("cls");
-            gotoxy(5, 5); printf("¼±ÅÃÁö1 °á°ú");
+            if (slime.health <= 0) {
+                ClearScreen();
+                SetCursorPosition(30, 10);
+                printf("ìŠ¬ë¼ì„ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤!\n");
+                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            }
+            else {
+                ClearScreen();
+                DisplayGameScreen(slime, "ìŠ¬ë¼ì„ì´ ë‹¹ì‹ ì„ ê³µê²©í•©ë‹ˆë‹¤!");
+                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            }
+            break;
+        case 2:
+            ClearScreen();
+            SetCursorPosition(20, 5);   printf("===========================\n");
+            SetCursorPosition(20, 6);   printf("        ê²Œì„ ì„¤ëª…\n");
+            SetCursorPosition(20, 7);   printf("===========================\n");
+            SetCursorPosition(20, 9);   printf("ëª¬ìŠ¤í„°ì™€ ì‹¸ì›Œ ìŠ¹ë¦¬í•˜ì„¸ìš”!\n");
+            SetCursorPosition(20, 10);  printf("ê³µê²© ì‹œ íƒ€ì´ë°ì— ë§ì¶° Spacebarë¥¼ ëˆ„ë¥´ë©´ ë°ë¯¸ì§€ê°€ ì¦ê°€í•©ë‹ˆë‹¤.\n");
+            SetCursorPosition(20, 12);  printf("ì•„ë¬´ í‚¤ë‚˜ ëˆŒëŸ¬ ë©”ì¸ ë©”ë‰´ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤...\n");
+            _getch();
+            break;
+        case 3:
+            ClearScreen();
+            SetCursorPosition(30, 10);
+            printf("ê²Œì„ì„ ì¢…ë£Œí•©ë‹ˆë‹¤. ì•ˆë…•íˆ ê³„ì„¸ìš”!\n");
+            std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+            break;
+        default:
+            SetCursorPosition(30, 14);
+            printf("ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•´ì£¼ì„¸ìš”.\n");
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             break;
         }
-        else if (choice == '2') {
-            system("cls");
-            gotoxy(5, 5); printf("¼±ÅÃÁö 2 °á°ú");
-            break;
-        }
-    }
+    } while (choice != 3);
+
+    return 0;
 }
-
-    // ½ºÅ×ÀÌÁö 2 ½£ ÃÊÀÔ
-    void stage2() {
-        const char* npcNames[] = {
-            "NPC", "NPC", "NPC"
-        };
-        const char* stageLines[] = {
-            "´ë»ç1(NPC)",
-            "´ë»ç2(NPC)",
-            "´ë»ç3(NPC)"
-        };
-        int numLines = sizeof(stageLines) / sizeof(stageLines[0]);
-        printDialogueWithNPC(npcNames, stageLines, numLines, 5, 5);
-
-        gotoxy(5, 10); setColor(WHITE); printf("1. ¼±ÅÃÁö1");
-        gotoxy(5, 11); printf("2. ¼±ÅÃÁö2");
-        gotoxy(5, 13); printf("¼±ÅÃ : ");
-    };
-
-    /*waitForEnter();
-    system("cls");
-    gotoxy(5, 5); printf("To be continued... (Stage 2 ÁØºñ Áß)");*/
-

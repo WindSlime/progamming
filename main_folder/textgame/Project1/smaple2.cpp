@@ -1,32 +1,32 @@
-#define _CRT_SECURE_NO_WARNINGS // Visual Studio ÄÄÆÄÀÏ·¯ °æ°í ºñÈ°¼ºÈ­
-#include <stdio.h> // Ç¥ÁØ ÀÔÃâ·Â ÇÔ¼ö
-#include <stdlib.h> // ÀÏ¹İ À¯Æ¿¸®Æ¼ ÇÔ¼ö (system, rand, srand)
-#include <time.h> // ½Ã°£ °ü·Ã ÇÔ¼ö (time, difftime)
-#include <string.h> // ¹®ÀÚ¿­ °ü·Ã ÇÔ¼ö (strlen, strcmp)
+ï»¿#define _CRT_SECURE_NO_WARNINGS // Visual Studio ì»´íŒŒì¼ëŸ¬ ê²½ê³  ë¹„í™œì„±í™”
+#include <stdio.h> // í‘œì¤€ ì…ì¶œë ¥ í•¨ìˆ˜
+#include <stdlib.h> // ì¼ë°˜ ìœ í‹¸ë¦¬í‹° í•¨ìˆ˜ (system, rand, srand)
+#include <time.h> // ì‹œê°„ ê´€ë ¨ í•¨ìˆ˜ (time, difftime)
+#include <string.h> // ë¬¸ìì—´ ê´€ë ¨ í•¨ìˆ˜ (strlen, strcmp)
 
-// ¿î¿µÃ¼Á¦º° ¸ÅÅ©·Î Á¤ÀÇ (Windows¿Í POSIX ½Ã½ºÅÛ È£È¯¼º)
+// ìš´ì˜ì²´ì œë³„ ë§¤í¬ë¡œ ì •ì˜ (Windowsì™€ POSIX ì‹œìŠ¤í…œ í˜¸í™˜ì„±)
 #ifdef _WIN32
 #include <windows.h> // Windows API (Sleep)
-#include <conio.h> // ÄÜ¼Ö ÀÔÃâ·Â (getch, kbhit)
-#define CLEAR_SCREEN "cls" // È­¸é Áö¿ì±â ¸í·É¾î (Windows)
-#define SLEEP_MS(ms) Sleep(ms) // ¹Ğ¸®ÃÊ ´ÜÀ§ ´ë±â
-#define GET_KEY _getch // Å° ÀÔ·Â ÇÔ¼ö (Enter ¾øÀÌ Áï½Ã ÀÔ·Â)
-#define CHECK_KEY_HIT _kbhit // Å° ÀÔ·Â °¨Áö ÇÔ¼ö
+#include <conio.h> // ì½˜ì†” ì…ì¶œë ¥ (getch, kbhit)
+#define CLEAR_SCREEN "cls" // í™”ë©´ ì§€ìš°ê¸° ëª…ë ¹ì–´ (Windows)
+#define SLEEP_MS(ms) Sleep(ms) // ë°€ë¦¬ì´ˆ ë‹¨ìœ„ ëŒ€ê¸°
+#define GET_KEY _getch // í‚¤ ì…ë ¥ í•¨ìˆ˜ (Enter ì—†ì´ ì¦‰ì‹œ ì…ë ¥)
+#define CHECK_KEY_HIT _kbhit // í‚¤ ì…ë ¥ ê°ì§€ í•¨ìˆ˜
 #else
-#include <unistd.h> // POSIX ½Ã½ºÅÛ API (usleep)
-#include <termios.h> // ÅÍ¹Ì³Î ¼Ó¼º Á¦¾î (non-blocking ÀÔ·Â)
-#include <sys/time.h> // ½Ã°£ °ü·Ã (struct timeval)
+#include <unistd.h> // POSIX ì‹œìŠ¤í…œ API (usleep)
+#include <termios.h> // í„°ë¯¸ë„ ì†ì„± ì œì–´ (non-blocking ì…ë ¥)
+#include <sys/time.h> // ì‹œê°„ ê´€ë ¨ (struct timeval)
 
-// POSIX ½Ã½ºÅÛ¿ë non-blocking ÀÔ·Â ÇÔ¼ö
+// POSIX ì‹œìŠ¤í…œìš© non-blocking ì…ë ¥ í•¨ìˆ˜
 void changemode(int dir) {
     static struct termios oldt, newt;
-    if (dir == 1) { // raw ¸ğµå ¼³Á¤
-        tcgetattr(STDIN_FILENO, &oldt); // ÇöÀç ÅÍ¹Ì³Î ¼³Á¤ ÀúÀå
+    if (dir == 1) { // raw ëª¨ë“œ ì„¤ì •
+        tcgetattr(STDIN_FILENO, &oldt); // í˜„ì¬ í„°ë¯¸ë„ ì„¤ì • ì €ì¥
         newt = oldt;
-        newt.c_lflag &= ~(ICANON | ECHO); // Ä³³ë´ÏÄÃ ¸ğµå¿Í ¿¡ÄÚ ºñÈ°¼ºÈ­
-        tcsetattr(STDIN_FILENO, TCSANOW, &newt); // »õ ¼³Á¤ Àû¿ë
+        newt.c_lflag &= ~(ICANON | ECHO); // ìºë…¸ë‹ˆì»¬ ëª¨ë“œì™€ ì—ì½” ë¹„í™œì„±í™”
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt); // ìƒˆ ì„¤ì • ì ìš©
     }
-    else { // ¿ø·¡ ¸ğµå·Î º¹¿ø
+    else { // ì›ë˜ ëª¨ë“œë¡œ ë³µì›
         tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     }
 }
@@ -34,279 +34,279 @@ void changemode(int dir) {
 int kbhit(void) {
     struct timeval tv;
     fd_set rdfs;
-    tv.tv_sec = 0; tv.tv_usec = 0; // Å¸ÀÓ¾Æ¿ô 0À¸·Î ¼³Á¤ (Áï½Ã ¹İÈ¯)
-    FD_ZERO(&rdfs); // ÆÄÀÏ µğ½ºÅ©¸³ÅÍ ÁıÇÕ ÃÊ±âÈ­
-    FD_SET(STDIN_FILENO, &rdfs); // Ç¥ÁØ ÀÔ·Â(Å°º¸µå)À» ÁıÇÕ¿¡ Ãß°¡
-    select(STDIN_FILENO + 1, &rdfs, NULL, NULL, &tv); // ÀÔ·Â ´ë±â
-    return FD_ISSET(STDIN_FILENO, &rdfs); // ÀÔ·ÂÀÌ ÀÖÀ¸¸é 1 ¹İÈ¯
+    tv.tv_sec = 0; tv.tv_usec = 0; // íƒ€ì„ì•„ì›ƒ 0ìœ¼ë¡œ ì„¤ì • (ì¦‰ì‹œ ë°˜í™˜)
+    FD_ZERO(&rdfs); // íŒŒì¼ ë””ìŠ¤í¬ë¦½í„° ì§‘í•© ì´ˆê¸°í™”
+    FD_SET(STDIN_FILENO, &rdfs); // í‘œì¤€ ì…ë ¥(í‚¤ë³´ë“œ)ì„ ì§‘í•©ì— ì¶”ê°€
+    select(STDIN_FILENO + 1, &rdfs, NULL, NULL, &tv); // ì…ë ¥ ëŒ€ê¸°
+    return FD_ISSET(STDIN_FILENO, &rdfs); // ì…ë ¥ì´ ìˆìœ¼ë©´ 1 ë°˜í™˜
 }
 
-#define CLEAR_SCREEN "clear" // È­¸é Áö¿ì±â ¸í·É¾î (POSIX)
-#define SLEEP_MS(ms) usleep(ms * 1000) // ¹Ğ¸®ÃÊ¸¦ ¸¶ÀÌÅ©·ÎÃÊ·Î º¯È¯ÇÏ¿© ´ë±â
-#define GET_KEY getchar // Å° ÀÔ·Â ÇÔ¼ö (Enter ÇÊ¿ä, ÇÏÁö¸¸ kbhit°ú ÇÔ²² non-blockingÃ³·³ µ¿ÀÛ)
-#define CHECK_KEY_HIT kbhit // Å° ÀÔ·Â °¨Áö ÇÔ¼ö
+#define CLEAR_SCREEN "clear" // í™”ë©´ ì§€ìš°ê¸° ëª…ë ¹ì–´ (POSIX)
+#define SLEEP_MS(ms) usleep(ms * 1000) // ë°€ë¦¬ì´ˆë¥¼ ë§ˆì´í¬ë¡œì´ˆë¡œ ë³€í™˜í•˜ì—¬ ëŒ€ê¸°
+#define GET_KEY getchar // í‚¤ ì…ë ¥ í•¨ìˆ˜ (Enter í•„ìš”, í•˜ì§€ë§Œ kbhitê³¼ í•¨ê»˜ non-blockingì²˜ëŸ¼ ë™ì‘)
+#define CHECK_KEY_HIT kbhit // í‚¤ ì…ë ¥ ê°ì§€ í•¨ìˆ˜
 #endif
 
-// ANSI ÀÌ½ºÄÉÀÌÇÁ ÄÚµå (»ö»ó ¹× ½ºÅ¸ÀÏ)
-#define ANSI_COLOR_RED     "\x1b[31m" // »¡°£»ö ÅØ½ºÆ®
-#define ANSI_COLOR_GREEN   "\x1b[32m" // ÃÊ·Ï»ö ÅØ½ºÆ®
-#define ANSI_COLOR_YELLOW  "\x1b[33m" // ³ë¶õ»ö ÅØ½ºÆ®
-#define ANSI_COLOR_BLUE    "\x1b[34m" // ÆÄ¶õ»ö ÅØ½ºÆ®
-#define ANSI_COLOR_MAGENTA "\x1b[35m" // ¸¶Á¨Å¸»ö ÅØ½ºÆ®
-#define ANSI_COLOR_CYAN    "\x1b[36m" // ½Ã¾È»ö ÅØ½ºÆ®
-#define ANSI_COLOR_RESET   "\x1b[0m"  // »ö»ó ÃÊ±âÈ­
+// ANSI ì´ìŠ¤ì¼€ì´í”„ ì½”ë“œ (ìƒ‰ìƒ ë° ìŠ¤íƒ€ì¼)
+#define ANSI_COLOR_RED     "\x1b[31m" // ë¹¨ê°„ìƒ‰ í…ìŠ¤íŠ¸
+#define ANSI_COLOR_GREEN   "\x1b[32m" // ì´ˆë¡ìƒ‰ í…ìŠ¤íŠ¸
+#define ANSI_COLOR_YELLOW  "\x1b[33m" // ë…¸ë€ìƒ‰ í…ìŠ¤íŠ¸
+#define ANSI_COLOR_BLUE    "\x1b[34m" // íŒŒë€ìƒ‰ í…ìŠ¤íŠ¸
+#define ANSI_COLOR_MAGENTA "\x1b[35m" // ë§ˆì  íƒ€ìƒ‰ í…ìŠ¤íŠ¸
+#define ANSI_COLOR_CYAN    "\x1b[36m" // ì‹œì•ˆìƒ‰ í…ìŠ¤íŠ¸
+#define ANSI_COLOR_RESET   "\x1b[0m"  // ìƒ‰ìƒ ì´ˆê¸°í™”
 
-// --- ÇÔ¼ö ¼±¾ğ ---
+// --- í•¨ìˆ˜ ì„ ì–¸ ---
 void clearScreen();
 void print_centered(const char* text, int offset, const char* color);
 void draw_ui(int player_hp, int demon_hp, int focus, double remaining_time, int yokelin_active);
 void generate_pattern(char* buffer, int length);
 void print_pattern_with_highlight(const char* pattern, const char* player_input, int current_pos, int offset);
 
-// --- ¸ŞÀÎ ·ÎÁ÷ ---
+// --- ë©”ì¸ ë¡œì§ ---
 int main() {
-    srand((unsigned int)time(NULL)); // ³­¼ö »ı¼º±â ½Ãµå ÃÊ±âÈ­
+    srand((unsigned int)time(NULL)); // ë‚œìˆ˜ ìƒì„±ê¸° ì‹œë“œ ì´ˆê¸°í™”
 
 #ifndef _WIN32
-    changemode(1); // POSIX ½Ã½ºÅÛ¿¡¼­ ÅÍ¹Ì³ÎÀ» raw ¸ğµå·Î ¼³Á¤
+    changemode(1); // POSIX ì‹œìŠ¤í…œì—ì„œ í„°ë¯¸ë„ì„ raw ëª¨ë“œë¡œ ì„¤ì •
 #endif
 
-    // --- °ÔÀÓ ¼Ò°³ ¹× ½ºÅä¸® ÀÎÆ®·Î ---
+    // --- ê²Œì„ ì†Œê°œ ë° ìŠ¤í† ë¦¬ ì¸íŠ¸ë¡œ ---
     clearScreen();
     print_centered("==========================================================", 0, ANSI_COLOR_YELLOW);
-    print_centered("   3ºĞ ¸¸¿¡ ÃÖ°­ ¸¶¿ÕÀ» ¾²·¯¶ß¸° ³»°¡, Àü»ı¿¡ ¼¼°è¸¦ ±¸Çß´ø ÀÌ¼¼°è ¿ë»ç¶ó°í¿ä?!", -2, ANSI_COLOR_YELLOW);
+    print_centered("   3ë¶„ ë§Œì— ìµœê°• ë§ˆì™•ì„ ì“°ëŸ¬ëœ¨ë¦° ë‚´ê°€, ì „ìƒì— ì„¸ê³„ë¥¼ êµ¬í–ˆë˜ ì´ì„¸ê³„ ìš©ì‚¬ë¼ê³ ìš”?!", -2, ANSI_COLOR_YELLOW);
     print_centered("==========================================================", -4, ANSI_COLOR_YELLOW);
-    print_centered("¼öÃµ ³â Àü, Ãµ¸¶¿¡°Ô Áö¹è´çÇß´ø ¼¼»óÀº Ãµ°øÀÎÀÇ Èñ»ıÀ¸·Î ÆòÈ­¸¦ µÇÃ£¾ÒÀ¸³ª,", -7, ANSI_COLOR_RESET);
-    print_centered("±×ÀÇ ºÀÀÎÀÌ ¾àÇØÁö¸ç ´Ù½Ã À§Çù¹Ş½À´Ï´Ù. ½º½ÂÀÇ Èñ»ı ¼Ó¿¡¼­ 'È¥Àı°Ë'À» °è½ÂÇÑ ´ç½ÅÀº", -8, ANSI_COLOR_RESET);
-    print_centered("Ãµ¸¶°¡ ¿ÏÀüÈ÷ ºÎÈ°ÇÑ Ç÷¿ù±Ã¿¡ È¦·Î ÀáÀÔÇÕ´Ï´Ù.", -9, ANSI_COLOR_RESET);
-    print_centered("ÀÌÁ¦ ´Ü 3ºĞ ¾È¿¡ Ãµ¸¶¸¦ ¾²·¯¶ß¸®Áö ¸øÇÏ¸é ¼¼»óÀº ¿µ¿øÈ÷ ¾îµÒ¿¡ Àá±æ °ÍÀÔ´Ï´Ù.", -10, ANSI_COLOR_RESET);
-    print_centered("ÀÎ·ùÀÇ °ú°Å¿Í ¹Ì·¡¸¦ °Ç ÃÖÈÄÀÇ 180ÃÊ¿¡ Á÷¸éÇÕ´Ï´Ù.", -11, ANSI_COLOR_RESET);
-    print_centered(" ", -12, ANSI_COLOR_RESET); // ÇÑ ÁÙ °ø¹é
-    print_centered("Ãµ¸¶ÀÇ °ø°İ '±ËÀû'À» º¸°í Á¤È®ÇÑ Å°(A, S, W, D)·Î ¹Ş¾ÆÄ¡½Ê½Ã¿À.", -14, ANSI_COLOR_CYAN);
-    print_centered("ÄŞº¸¸¦ ½×¾Æ 'ÁıÁß·Â'À» ¸ğÀ¸°í, ÇÊ»ì±â(F) 'È¥Àı°Ë'À¸·Î Ä¡¸íÅ¸¸¦ ³¯¸®¼¼¿ä!", -15, ANSI_COLOR_CYAN);
-    print_centered("¶ÇÇÑ, Q ¶Ç´Â E¸¦ ´­·¯ '¿ª¸°°Ë°á'À» ¹ßµ¿ÇÏ¿© Àá½Ã °ø°İ·ÂÀ» °­È­ÇÒ ¼ö ÀÖ½À´Ï´Ù.", -16, ANSI_COLOR_CYAN);
-    print_centered("¾Æ¹« Å°³ª ´­·¯ ½ÃÀÛ...", -19, ANSI_COLOR_GREEN);
-    (void)GET_KEY(); // »ç¿ëÀÚ ÀÔ·Â ´ë±â
+    print_centered("ìˆ˜ì²œ ë…„ ì „, ì²œë§ˆì—ê²Œ ì§€ë°°ë‹¹í–ˆë˜ ì„¸ìƒì€ ì²œê³µì¸ì˜ í¬ìƒìœ¼ë¡œ í‰í™”ë¥¼ ë˜ì°¾ì•˜ìœ¼ë‚˜,", -7, ANSI_COLOR_RESET);
+    print_centered("ê·¸ì˜ ë´‰ì¸ì´ ì•½í•´ì§€ë©° ë‹¤ì‹œ ìœ„í˜‘ë°›ìŠµë‹ˆë‹¤. ìŠ¤ìŠ¹ì˜ í¬ìƒ ì†ì—ì„œ 'í˜¼ì ˆê²€'ì„ ê³„ìŠ¹í•œ ë‹¹ì‹ ì€", -8, ANSI_COLOR_RESET);
+    print_centered("ì²œë§ˆê°€ ì™„ì „íˆ ë¶€í™œí•œ í˜ˆì›”ê¶ì— í™€ë¡œ ì ì…í•©ë‹ˆë‹¤.", -9, ANSI_COLOR_RESET);
+    print_centered("ì´ì œ ë‹¨ 3ë¶„ ì•ˆì— ì²œë§ˆë¥¼ ì“°ëŸ¬ëœ¨ë¦¬ì§€ ëª»í•˜ë©´ ì„¸ìƒì€ ì˜ì›íˆ ì–´ë‘ ì— ì ê¸¸ ê²ƒì…ë‹ˆë‹¤.", -10, ANSI_COLOR_RESET);
+    print_centered("ì¸ë¥˜ì˜ ê³¼ê±°ì™€ ë¯¸ë˜ë¥¼ ê±´ ìµœí›„ì˜ 180ì´ˆì— ì§ë©´í•©ë‹ˆë‹¤.", -11, ANSI_COLOR_RESET);
+    print_centered(" ", -12, ANSI_COLOR_RESET); // í•œ ì¤„ ê³µë°±
+    print_centered("ì²œë§ˆì˜ ê³µê²© 'ê¶¤ì 'ì„ ë³´ê³  ì •í™•í•œ í‚¤(A, S, W, D)ë¡œ ë°›ì•„ì¹˜ì‹­ì‹œì˜¤.", -14, ANSI_COLOR_CYAN);
+    print_centered("ì½¤ë³´ë¥¼ ìŒ“ì•„ 'ì§‘ì¤‘ë ¥'ì„ ëª¨ìœ¼ê³ , í•„ì‚´ê¸°(F) 'í˜¼ì ˆê²€'ìœ¼ë¡œ ì¹˜ëª…íƒ€ë¥¼ ë‚ ë¦¬ì„¸ìš”!", -15, ANSI_COLOR_CYAN);
+    print_centered("ë˜í•œ, Q ë˜ëŠ” Eë¥¼ ëˆŒëŸ¬ 'ì—­ë¦°ê²€ê²°'ì„ ë°œë™í•˜ì—¬ ì ì‹œ ê³µê²©ë ¥ì„ ê°•í™”í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.", -16, ANSI_COLOR_CYAN);
+    print_centered("ì•„ë¬´ í‚¤ë‚˜ ëˆŒëŸ¬ ì‹œì‘...", -19, ANSI_COLOR_GREEN);
+    (void)GET_KEY(); // ì‚¬ìš©ì ì…ë ¥ ëŒ€ê¸°
 
-    // --- °ÔÀÓ º¯¼ö ÃÊ±âÈ­ ---
-    int player_hp = 100; // ÇÃ·¹ÀÌ¾î Ã¼·Â
-    int demon_hp = 900; // Ãµ¸¶ Ã¼·Â
-    int focus = 0; // ÁıÁß·Â (ÇÊ»ì±â °ÔÀÌÁö)
-    int combo = 0; // ÄŞº¸ Ä«¿îÆ®
+    // --- ê²Œì„ ë³€ìˆ˜ ì´ˆê¸°í™” ---
+    int player_hp = 100; // í”Œë ˆì´ì–´ ì²´ë ¥
+    int demon_hp = 900; // ì²œë§ˆ ì²´ë ¥
+    int focus = 0; // ì§‘ì¤‘ë ¥ (í•„ì‚´ê¸° ê²Œì´ì§€)
+    int combo = 0; // ì½¤ë³´ ì¹´ìš´íŠ¸
 
-    char pattern[10] = ""; // Ãµ¸¶ÀÇ °ø°İ ÆĞÅÏ (¿¹: "aswd")
-    char player_input[10] = ""; // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç ÀÔ·Â
-    int pattern_len = 3; // ÃÊ±â ÆĞÅÏ ±æÀÌ
-    int current_input_pos = 0; // ÇöÀç ÀÔ·ÂÇØ¾ß ÇÒ ÆĞÅÏ À§Ä¡
+    char pattern[10] = ""; // ì²œë§ˆì˜ ê³µê²© íŒ¨í„´ (ì˜ˆ: "aswd")
+    char player_input[10] = ""; // í”Œë ˆì´ì–´ì˜ í˜„ì¬ ì…ë ¥
+    int pattern_len = 3; // ì´ˆê¸° íŒ¨í„´ ê¸¸ì´
+    int current_input_pos = 0; // í˜„ì¬ ì…ë ¥í•´ì•¼ í•  íŒ¨í„´ ìœ„ì¹˜
 
-    int needs_new_pattern = 1; // »õ ÆĞÅÏ »ı¼º ÇÊ¿ä ¿©ºÎ ÇÃ·¡±×
+    int needs_new_pattern = 1; // ìƒˆ íŒ¨í„´ ìƒì„± í•„ìš” ì—¬ë¶€ í”Œë˜ê·¸
 
-    time_t start_time = time(NULL); // °ÔÀÓ ½ÃÀÛ ½Ã°£
-    const int TIME_LIMIT = 180; // ½Ã°£ Á¦ÇÑ (ÃÊ)
-    double elapsed_time = 0; // °æ°ú ½Ã°£
+    time_t start_time = time(NULL); // ê²Œì„ ì‹œì‘ ì‹œê°„
+    const int TIME_LIMIT = 180; // ì‹œê°„ ì œí•œ (ì´ˆ)
+    double elapsed_time = 0; // ê²½ê³¼ ì‹œê°„
 
-    // ¿ª¸°°Ë°á °ü·Ã º¯¼ö
-    int yokelin_active = 0; // ¿ª¸°°Ë°á È°¼ºÈ­ ¿©ºÎ
-    time_t yokelin_duration_start_time = 0; // ¿ª¸°°Ë°á ½ÃÀÛ ½Ã°£
-    const int YOKELIN_DURATION = 5; // ¿ª¸°°Ë°á Áö¼Ó ½Ã°£ (ÃÊ)
-    const int YOKELIN_FOCUS_COST = 20; // ¿ª¸°°Ë°á ÁıÁß·Â ¼Ò¸ğ·®
-    const double YOKELIN_DAMAGE_MULTIPLIER = 1.5; // ¿ª¸°°Ë°á °ø°İ·Â ¹èÀ²
+    // ì—­ë¦°ê²€ê²° ê´€ë ¨ ë³€ìˆ˜
+    int yokelin_active = 0; // ì—­ë¦°ê²€ê²° í™œì„±í™” ì—¬ë¶€
+    time_t yokelin_duration_start_time = 0; // ì—­ë¦°ê²€ê²° ì‹œì‘ ì‹œê°„
+    const int YOKELIN_DURATION = 5; // ì—­ë¦°ê²€ê²° ì§€ì† ì‹œê°„ (ì´ˆ)
+    const int YOKELIN_FOCUS_COST = 20; // ì—­ë¦°ê²€ê²° ì§‘ì¤‘ë ¥ ì†Œëª¨ëŸ‰
+    const double YOKELIN_DAMAGE_MULTIPLIER = 1.5; // ì—­ë¦°ê²€ê²° ê³µê²©ë ¥ ë°°ìœ¨
 
-    // --- ¸ŞÀÎ °ÔÀÓ ·çÇÁ ---
+    // --- ë©”ì¸ ê²Œì„ ë£¨í”„ ---
     while (player_hp > 0 && demon_hp > 0) {
-        elapsed_time = difftime(time(NULL), start_time); // °æ°ú ½Ã°£ °è»ê
-        if (elapsed_time >= TIME_LIMIT) break; // ½Ã°£ ÃÊ°ú ½Ã °ÔÀÓ Á¾·á
+        elapsed_time = difftime(time(NULL), start_time); // ê²½ê³¼ ì‹œê°„ ê³„ì‚°
+        if (elapsed_time >= TIME_LIMIT) break; // ì‹œê°„ ì´ˆê³¼ ì‹œ ê²Œì„ ì¢…ë£Œ
 
-        // ¿ª¸°°Ë°á Áö¼Ó ½Ã°£ È®ÀÎ ¹× ºñÈ°¼ºÈ­
+        // ì—­ë¦°ê²€ê²° ì§€ì† ì‹œê°„ í™•ì¸ ë° ë¹„í™œì„±í™”
         if (yokelin_active && difftime(time(NULL), yokelin_duration_start_time) >= YOKELIN_DURATION) {
             yokelin_active = 0;
-            print_centered("¿ª¸°°Ë°á È¿°ú°¡ ³¡³µ½À´Ï´Ù.", 10, ANSI_COLOR_BLUE);
+            print_centered("ì—­ë¦°ê²€ê²° íš¨ê³¼ê°€ ëë‚¬ìŠµë‹ˆë‹¤.", 10, ANSI_COLOR_BLUE);
             SLEEP_MS(800);
         }
 
         if (needs_new_pattern) {
-            generate_pattern(pattern, pattern_len); // »õ ÆĞÅÏ »ı¼º
-            current_input_pos = 0; // ÀÔ·Â À§Ä¡ ÃÊ±âÈ­
-            player_input[0] = '\0'; // ÇÃ·¹ÀÌ¾î ÀÔ·Â ¹öÆÛ ÃÊ±âÈ­
-            needs_new_pattern = 0; // »õ ÆĞÅÏ »ı¼º ÇÃ·¡±× ºñÈ°¼ºÈ­
+            generate_pattern(pattern, pattern_len); // ìƒˆ íŒ¨í„´ ìƒì„±
+            current_input_pos = 0; // ì…ë ¥ ìœ„ì¹˜ ì´ˆê¸°í™”
+            player_input[0] = '\0'; // í”Œë ˆì´ì–´ ì…ë ¥ ë²„í¼ ì´ˆê¸°í™”
+            needs_new_pattern = 0; // ìƒˆ íŒ¨í„´ ìƒì„± í”Œë˜ê·¸ ë¹„í™œì„±í™”
         }
 
-        clearScreen(); // È­¸é Áö¿ì±â
-        draw_ui(player_hp, demon_hp, focus, TIME_LIMIT - elapsed_time, yokelin_active); // UI ±×¸®±â
+        clearScreen(); // í™”ë©´ ì§€ìš°ê¸°
+        draw_ui(player_hp, demon_hp, focus, TIME_LIMIT - elapsed_time, yokelin_active); // UI ê·¸ë¦¬ê¸°
 
-        print_centered("Ãµ¸¶ÀÇ °ø°İ ±ËÀû:", 2, ANSI_COLOR_RESET);
-        print_pattern_with_highlight(pattern, player_input, current_input_pos, 3); // ÇÏÀÌ¶óÀÌÆ®µÈ ÆĞÅÏ Ãâ·Â
-        print_centered(" ", 4, ANSI_COLOR_RESET); // °ø¹é
-        print_centered("´ç½ÅÀÇ ÀÔ·Â:", 5, ANSI_COLOR_RESET);
-        print_centered(player_input, 6, ANSI_COLOR_RESET); // ÇÃ·¹ÀÌ¾î ÀÔ·Â Ãâ·Â
+        print_centered("ì²œë§ˆì˜ ê³µê²© ê¶¤ì :", 2, ANSI_COLOR_RESET);
+        print_pattern_with_highlight(pattern, player_input, current_input_pos, 3); // í•˜ì´ë¼ì´íŠ¸ëœ íŒ¨í„´ ì¶œë ¥
+        print_centered(" ", 4, ANSI_COLOR_RESET); // ê³µë°±
+        print_centered("ë‹¹ì‹ ì˜ ì…ë ¥:", 5, ANSI_COLOR_RESET);
+        print_centered(player_input, 6, ANSI_COLOR_RESET); // í”Œë ˆì´ì–´ ì…ë ¥ ì¶œë ¥
 
-        // ³²Àº ½Ã°£ °æ°í
+        // ë‚¨ì€ ì‹œê°„ ê²½ê³ 
         if (TIME_LIMIT - elapsed_time <= 30 && TIME_LIMIT - elapsed_time > 0) {
-            if ((int)(TIME_LIMIT - elapsed_time) % 5 == 0) { // 5ÃÊ¸¶´Ù °æ°í
-                print_centered("!! ½Ã°£ÀÌ ¾ó¸¶ ³²Áö ¾Ê¾Ò½À´Ï´Ù !!", 8, ANSI_COLOR_RED);
+            if ((int)(TIME_LIMIT - elapsed_time) % 5 == 0) { // 5ì´ˆë§ˆë‹¤ ê²½ê³ 
+                print_centered("!! ì‹œê°„ì´ ì–¼ë§ˆ ë‚¨ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤ !!", 8, ANSI_COLOR_RED);
             }
         }
 
-        // Å° ÀÔ·Â °¨Áö
+        // í‚¤ ì…ë ¥ ê°ì§€
         if (CHECK_KEY_HIT()) {
-            char key = GET_KEY(); // Å° ÀÔ·Â ¹Ş±â
+            char key = GET_KEY(); // í‚¤ ì…ë ¥ ë°›ê¸°
 
-            // ÇÊ»ì±â 'È¥Àı°Ë' »ç¿ë (F Å°)
+            // í•„ì‚´ê¸° 'í˜¼ì ˆê²€' ì‚¬ìš© (F í‚¤)
             if ((key == 'f' || key == 'F') && focus >= 100) {
                 int damage = 250;
-                if (yokelin_active) { // ¿ª¸°°Ë°á È°¼ºÈ­ ½Ã Ãß°¡ ÇÇÇØ
+                if (yokelin_active) { // ì—­ë¦°ê²€ê²° í™œì„±í™” ì‹œ ì¶”ê°€ í”¼í•´
                     damage = (int)(damage * YOKELIN_DAMAGE_MULTIPLIER);
-                    print_centered("È¥Àı°Ë + ¿ª¸°°Ë°á! ±Ø´ë ÇÇÇØ!", 8, ANSI_COLOR_MAGENTA);
+                    print_centered("í˜¼ì ˆê²€ + ì—­ë¦°ê²€ê²°! ê·¹ëŒ€ í”¼í•´!", 8, ANSI_COLOR_MAGENTA);
                 }
                 else {
-                    print_centered("ÇÊ»ìÀÇ ÀÏ°İ! È¥Àı°Ë!", 8, ANSI_COLOR_MAGENTA);
+                    print_centered("í•„ì‚´ì˜ ì¼ê²©! í˜¼ì ˆê²€!", 8, ANSI_COLOR_MAGENTA);
                 }
                 demon_hp -= damage;
-                focus = 0; // ÁıÁß·Â ¼Ò¸ğ
-                combo = 0; // ÄŞº¸ ÃÊ±âÈ­
-                SLEEP_MS(1500); // »ç¿ëÀÚ¿¡°Ô ¸Ş½ÃÁö È®ÀÎÇÒ ½Ã°£ ÁÖ±â
-                needs_new_pattern = 1; // »õ ÆĞÅÏ ÇÊ¿ä
-                continue; // ´ÙÀ½ ·çÇÁ ½ÃÀÛ (ÇöÀç ÀÔ·Â Ã³¸® °Ç³Ê¶Ù±â)
+                focus = 0; // ì§‘ì¤‘ë ¥ ì†Œëª¨
+                combo = 0; // ì½¤ë³´ ì´ˆê¸°í™”
+                SLEEP_MS(1500); // ì‚¬ìš©ìì—ê²Œ ë©”ì‹œì§€ í™•ì¸í•  ì‹œê°„ ì£¼ê¸°
+                needs_new_pattern = 1; // ìƒˆ íŒ¨í„´ í•„ìš”
+                continue; // ë‹¤ìŒ ë£¨í”„ ì‹œì‘ (í˜„ì¬ ì…ë ¥ ì²˜ë¦¬ ê±´ë„ˆë›°ê¸°)
             }
 
-            // ±â¼ú '¿ª¸°°Ë°á' »ç¿ë (Q ¶Ç´Â E Å°)
+            // ê¸°ìˆ  'ì—­ë¦°ê²€ê²°' ì‚¬ìš© (Q ë˜ëŠ” E í‚¤)
             if ((key == 'q' || key == 'Q' || key == 'e' || key == 'E') && focus >= YOKELIN_FOCUS_COST && !yokelin_active) {
-                focus -= YOKELIN_FOCUS_COST; // ÁıÁß·Â ¼Ò¸ğ
-                yokelin_active = 1; // ¿ª¸°°Ë°á È°¼ºÈ­
-                yokelin_duration_start_time = time(NULL); // Áö¼Ó ½Ã°£ ÃøÁ¤ ½ÃÀÛ
-                print_centered("¿ª¸°°Ë°á ¹ßµ¿! °ø°İ·ÂÀÌ »ó½ÂÇÕ´Ï´Ù!", 8, ANSI_COLOR_BLUE);
+                focus -= YOKELIN_FOCUS_COST; // ì§‘ì¤‘ë ¥ ì†Œëª¨
+                yokelin_active = 1; // ì—­ë¦°ê²€ê²° í™œì„±í™”
+                yokelin_duration_start_time = time(NULL); // ì§€ì† ì‹œê°„ ì¸¡ì • ì‹œì‘
+                print_centered("ì—­ë¦°ê²€ê²° ë°œë™! ê³µê²©ë ¥ì´ ìƒìŠ¹í•©ë‹ˆë‹¤!", 8, ANSI_COLOR_BLUE);
                 SLEEP_MS(1200);
-                // ¿ª¸°°Ë°áÀº ÆĞÅÏ ÀÔ·Â°ú º°°³ÀÌ¹Ç·Î ÇöÀç ÆĞÅÏÀº À¯Áö
+                // ì—­ë¦°ê²€ê²°ì€ íŒ¨í„´ ì…ë ¥ê³¼ ë³„ê°œì´ë¯€ë¡œ í˜„ì¬ íŒ¨í„´ì€ ìœ ì§€
                 continue;
             }
 
-            // ÀÏ¹İ ÆĞÅÏ ÀÔ·Â Ã³¸®
+            // ì¼ë°˜ íŒ¨í„´ ì…ë ¥ ì²˜ë¦¬
             if (current_input_pos < pattern_len) {
-                player_input[current_input_pos] = key; // ÇÃ·¹ÀÌ¾î ÀÔ·Â ÀúÀå
-                player_input[current_input_pos + 1] = '\0'; // ³Î Á¾·á ¹®ÀÚ Ãß°¡
+                player_input[current_input_pos] = key; // í”Œë ˆì´ì–´ ì…ë ¥ ì €ì¥
+                player_input[current_input_pos + 1] = '\0'; // ë„ ì¢…ë£Œ ë¬¸ì ì¶”ê°€
             }
 
-            // ÀÔ·ÂÀÌ ÆĞÅÏ°ú ÀÏÄ¡ÇÏÁö ¾ÊÀ» ¶§
+            // ì…ë ¥ì´ íŒ¨í„´ê³¼ ì¼ì¹˜í•˜ì§€ ì•Šì„ ë•Œ
             if (key != pattern[current_input_pos]) {
-                player_hp -= 20; // ÇÃ·¹ÀÌ¾î Ã¼·Â °¨¼Ò
-                focus = (focus > 10) ? focus - 10 : 0; // ÁıÁß·Â °¨¼Ò (ÃÖ¼Ò 0)
-                combo = 0; // ÄŞº¸ ÃÊ±âÈ­S
-                print_centered("±ËÀûÀÌ ÈåÆ®·¯Á³´Ù! Ãµ¸¶ÀÇ ¹İ°İ!", 8, ANSI_COLOR_RED);
-                SLEEP_MS(1000); // Àá½Ã ´ë±âÇÏ¿© ¸Ş½ÃÁö È®ÀÎ
-                needs_new_pattern = 1; // »õ ÆĞÅÏ ÇÊ¿ä
+                player_hp -= 20; // í”Œë ˆì´ì–´ ì²´ë ¥ ê°ì†Œ
+                focus = (focus > 10) ? focus - 10 : 0; // ì§‘ì¤‘ë ¥ ê°ì†Œ (ìµœì†Œ 0)
+                combo = 0; // ì½¤ë³´ ì´ˆê¸°í™”S
+                print_centered("ê¶¤ì ì´ ííŠ¸ëŸ¬ì¡Œë‹¤! ì²œë§ˆì˜ ë°˜ê²©!", 8, ANSI_COLOR_RED);
+                SLEEP_MS(1000); // ì ì‹œ ëŒ€ê¸°í•˜ì—¬ ë©”ì‹œì§€ í™•ì¸
+                needs_new_pattern = 1; // ìƒˆ íŒ¨í„´ í•„ìš”
             }
-            // ÀÔ·ÂÀÌ ÆĞÅÏ°ú ÀÏÄ¡ÇÒ ¶§
+            // ì…ë ¥ì´ íŒ¨í„´ê³¼ ì¼ì¹˜í•  ë•Œ
             else {
-                current_input_pos++; // ´ÙÀ½ ÀÔ·Â À§Ä¡·Î ÀÌµ¿
+                current_input_pos++; // ë‹¤ìŒ ì…ë ¥ ìœ„ì¹˜ë¡œ ì´ë™
 
-                // ÆĞÅÏÀ» ¸ğµÎ ¼º°øÀûÀ¸·Î ÀÔ·ÂÇßÀ» ¶§
+                // íŒ¨í„´ì„ ëª¨ë‘ ì„±ê³µì ìœ¼ë¡œ ì…ë ¥í–ˆì„ ë•Œ
                 if (current_input_pos == pattern_len) {
-                    int damage = 20 + (combo * 2); // ±âº» ÇÇÇØ·® + ÄŞº¸ º¸³Ê½º
-                    if (yokelin_active) { // ¿ª¸°°Ë°á È°¼ºÈ­ ½Ã ÇÇÇØ·® Áõ°¡
+                    int damage = 20 + (combo * 2); // ê¸°ë³¸ í”¼í•´ëŸ‰ + ì½¤ë³´ ë³´ë„ˆìŠ¤
+                    if (yokelin_active) { // ì—­ë¦°ê²€ê²° í™œì„±í™” ì‹œ í”¼í•´ëŸ‰ ì¦ê°€
                         damage = (int)(damage * YOKELIN_DAMAGE_MULTIPLIER);
                     }
-                    demon_hp -= damage; // Ãµ¸¶ Ã¼·Â °¨¼Ò
-                    focus += 15; // ÁıÁß·Â È¹µæ (¿ø·¡ 15¿´À½. 20 -> 15·Î ´Ù½Ã º¯°æ)
-                    if (focus > 100) focus = 100; // ÁıÁß·Â ÃÖ´ëÄ¡ Á¦ÇÑ
-                    combo++; // ÄŞº¸ Áõ°¡
+                    demon_hp -= damage; // ì²œë§ˆ ì²´ë ¥ ê°ì†Œ
+                    focus += 15; // ì§‘ì¤‘ë ¥ íšë“ (ì›ë˜ 15ì˜€ìŒ. 20 -> 15ë¡œ ë‹¤ì‹œ ë³€ê²½)
+                    if (focus > 100) focus = 100; // ì§‘ì¤‘ë ¥ ìµœëŒ€ì¹˜ ì œí•œ
+                    combo++; // ì½¤ë³´ ì¦ê°€
 
-                    print_centered("°ø°İÀ» ¹Ş¾ÆÃÆ´Ù! Á¤ÅëÀ¸·Î ¸íÁß!", 8, ANSI_COLOR_GREEN);
-                    SLEEP_MS(500); // Àá½Ã ´ë±â
+                    print_centered("ê³µê²©ì„ ë°›ì•„ì³¤ë‹¤! ì •í†µìœ¼ë¡œ ëª…ì¤‘!", 8, ANSI_COLOR_GREEN);
+                    SLEEP_MS(500); // ì ì‹œ ëŒ€ê¸°
 
-                    // ÄŞº¸¿¡ µû¶ó ÆĞÅÏ ±æÀÌ Áõ°¡ (ÃÖ´ë 7·Î Á¦ÇÑ)
-                    if (combo > 0 && combo % 7 == 0 && pattern_len < 7) { // 7ÄŞº¸¸¶´Ù ±æÀÌ Áõ°¡
+                    // ì½¤ë³´ì— ë”°ë¼ íŒ¨í„´ ê¸¸ì´ ì¦ê°€ (ìµœëŒ€ 7ë¡œ ì œí•œ)
+                    if (combo > 0 && combo % 7 == 0 && pattern_len < 7) { // 7ì½¤ë³´ë§ˆë‹¤ ê¸¸ì´ ì¦ê°€
                         pattern_len++;
-                        print_centered("Ãµ¸¶ÀÇ ±ËÀûÀÌ ´õ¿í º¹ÀâÇØÁı´Ï´Ù!", 9, ANSI_COLOR_YELLOW);
+                        print_centered("ì²œë§ˆì˜ ê¶¤ì ì´ ë”ìš± ë³µì¡í•´ì§‘ë‹ˆë‹¤!", 9, ANSI_COLOR_YELLOW);
                         SLEEP_MS(800);
                     }
-                    needs_new_pattern = 1; // »õ ÆĞÅÏ ÇÊ¿ä
+                    needs_new_pattern = 1; // ìƒˆ íŒ¨í„´ í•„ìš”
                 }
             }
         }
 
-        SLEEP_MS(33); // ·çÇÁ Áö¿¬ (¾à 30 FPS)
+        SLEEP_MS(33); // ë£¨í”„ ì§€ì—° (ì•½ 30 FPS)
     }
 
-    // --- °ÔÀÓ °á°ú È­¸é ---
-    clearScreen(); // È­¸é Áö¿ì±â
-    draw_ui(player_hp, demon_hp, focus, 0, yokelin_active); // ÃÖÁ¾ UI ±×¸®±â (³²Àº ½Ã°£ 0)
+    // --- ê²Œì„ ê²°ê³¼ í™”ë©´ ---
+    clearScreen(); // í™”ë©´ ì§€ìš°ê¸°
+    draw_ui(player_hp, demon_hp, focus, 0, yokelin_active); // ìµœì¢… UI ê·¸ë¦¬ê¸° (ë‚¨ì€ ì‹œê°„ 0)
 
-    if (demon_hp <= 0) { // Ãµ¸¶ °İÆÄ ¼º°ø
+    if (demon_hp <= 0) { // ì²œë§ˆ ê²©íŒŒ ì„±ê³µ
         print_centered("*****************************************************************", -2, ANSI_COLOR_YELLOW);
-        print_centered("* Ãµ¸¶ °İÆÄ! ÀÎ·ù¸¦ ±¸¿øÇß½À´Ï´Ù! ¼¼»ó¿¡ ÆòÈ­°¡ Ã£¾Æ¿É´Ï´Ù!     *", -3, ANSI_COLOR_GREEN);
+        print_centered("* ì²œë§ˆ ê²©íŒŒ! ì¸ë¥˜ë¥¼ êµ¬ì›í–ˆìŠµë‹ˆë‹¤! ì„¸ìƒì— í‰í™”ê°€ ì°¾ì•„ì˜µë‹ˆë‹¤!     *", -3, ANSI_COLOR_GREEN);
         print_centered("*****************************************************************", -4, ANSI_COLOR_YELLOW);
-        print_centered("´ç½ÅÀº ÀÎ·ùÀÇ °ú°Å¿Í ¹Ì·¡¸¦ ÁöÅ² ÁøÁ¤ÇÑ ¿µ¿õÀÔ´Ï´Ù.", -6, ANSI_COLOR_RESET);
-        print_centered("2ºĞ 58ÃÊ, Àü¼³Àº ½ÃÀÛµË´Ï´Ù...", -7, ANSI_COLOR_RESET);
+        print_centered("ë‹¹ì‹ ì€ ì¸ë¥˜ì˜ ê³¼ê±°ì™€ ë¯¸ë˜ë¥¼ ì§€í‚¨ ì§„ì •í•œ ì˜ì›…ì…ë‹ˆë‹¤.", -6, ANSI_COLOR_RESET);
+        print_centered("2ë¶„ 58ì´ˆ, ì „ì„¤ì€ ì‹œì‘ë©ë‹ˆë‹¤...", -7, ANSI_COLOR_RESET);
     }
-    else if (player_hp <= 0) { // ÇÃ·¹ÀÌ¾î Ã¼·Â ¼ÒÁø
+    else if (player_hp <= 0) { // í”Œë ˆì´ì–´ ì²´ë ¥ ì†Œì§„
         print_centered("*****************************************************************", -2, ANSI_COLOR_RED);
-        print_centered("* ´ç½ÅÀº ¾²·¯Á³½À´Ï´Ù... ¸ğµç °ÍÀÌ ¾îµÒ¿¡ Àá°å½À´Ï´Ù...         *", -3, ANSI_COLOR_RED);
+        print_centered("* ë‹¹ì‹ ì€ ì“°ëŸ¬ì¡ŒìŠµë‹ˆë‹¤... ëª¨ë“  ê²ƒì´ ì–´ë‘ ì— ì ê²¼ìŠµë‹ˆë‹¤...         *", -3, ANSI_COLOR_RED);
         print_centered("*****************************************************************", -4, ANSI_COLOR_RED);
-        print_centered("ÀÎ·ùÀÇ ¸¶Áö¸· Èñ¸ÁÀº »ç¶óÁ³°í, ¼¼»óÀº Ãµ¸¶ÀÇ ¼Õ¿¡ ³Ñ¾î°¬½À´Ï´Ù.", -6, ANSI_COLOR_RESET);
+        print_centered("ì¸ë¥˜ì˜ ë§ˆì§€ë§‰ í¬ë§ì€ ì‚¬ë¼ì¡Œê³ , ì„¸ìƒì€ ì²œë§ˆì˜ ì†ì— ë„˜ì–´ê°”ìŠµë‹ˆë‹¤.", -6, ANSI_COLOR_RESET);
     }
-    else { // ½Ã°£ ÃÊ°ú
+    else { // ì‹œê°„ ì´ˆê³¼
         print_centered("*****************************************************************", -2, ANSI_COLOR_RED);
-        print_centered("* ½Ã°£ ÃÊ°ú... ¼¼»óÀº ¿µ¿øÈ÷ ¾îµÒ¿¡ Àá°å½À´Ï´Ù...           *", -3, ANSI_COLOR_RED);
+        print_centered("* ì‹œê°„ ì´ˆê³¼... ì„¸ìƒì€ ì˜ì›íˆ ì–´ë‘ ì— ì ê²¼ìŠµë‹ˆë‹¤...           *", -3, ANSI_COLOR_RED);
         print_centered("*****************************************************************", -4, ANSI_COLOR_RED);
-        print_centered("ÃÖÈÄÀÇ 180ÃÊ´Â Áö³ª°¬°í, Ãµ¸¶ÀÇ ±×¸²ÀÚ°¡ ¼¼»óÀ» µÚµ¤¾ú½À´Ï´Ù.", -6, ANSI_COLOR_RESET);
+        print_centered("ìµœí›„ì˜ 180ì´ˆëŠ” ì§€ë‚˜ê°”ê³ , ì²œë§ˆì˜ ê·¸ë¦¼ìê°€ ì„¸ìƒì„ ë’¤ë®ì—ˆìŠµë‹ˆë‹¤.", -6, ANSI_COLOR_RESET);
     }
     print_centered("--- GAME OVER ---", -9, ANSI_COLOR_YELLOW);
-    SLEEP_MS(5000); // ÃÖÁ¾ ¸Ş½ÃÁö È®ÀÎÀ» À§ÇØ 5ÃÊ ´ë±â
+    SLEEP_MS(5000); // ìµœì¢… ë©”ì‹œì§€ í™•ì¸ì„ ìœ„í•´ 5ì´ˆ ëŒ€ê¸°
 
 #ifndef _WIN32
-    changemode(0); // POSIX ½Ã½ºÅÛ¿¡¼­ ÅÍ¹Ì³Î ¸ğµå ¿ø·¡´ë·Î º¹¿ø
+    changemode(0); // POSIX ì‹œìŠ¤í…œì—ì„œ í„°ë¯¸ë„ ëª¨ë“œ ì›ë˜ëŒ€ë¡œ ë³µì›
 #endif
-    return 0; // ÇÁ·Î±×·¥ Á¾·á
+    return 0; // í”„ë¡œê·¸ë¨ ì¢…ë£Œ
 }
 
 
-// --- À¯Æ¿¸®Æ¼ ÇÔ¼ö ±¸Çö ---
+// --- ìœ í‹¸ë¦¬í‹° í•¨ìˆ˜ êµ¬í˜„ ---
 
-// È­¸éÀ» Áö¿ì´Â ÇÔ¼ö
+// í™”ë©´ì„ ì§€ìš°ëŠ” í•¨ìˆ˜
 void clearScreen() {
     system(CLEAR_SCREEN);
 }
 
-// ÅØ½ºÆ®¸¦ Áß¾Ó Á¤·ÄÇÏ¿© Ãâ·ÂÇÏ´Â ÇÔ¼ö
-// offset: ¾ç¼ö¸é ÅØ½ºÆ® À§·Î ºó ÁÙ Ãß°¡, À½¼ö¸é ÅØ½ºÆ® ¾Æ·¡·Î ºó ÁÙ Ãß°¡
-// color: ANSI »ö»ó ÄÚµå ¹®ÀÚ¿­ (¿¹: ANSI_COLOR_RED)
+// í…ìŠ¤íŠ¸ë¥¼ ì¤‘ì•™ ì •ë ¬í•˜ì—¬ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜
+// offset: ì–‘ìˆ˜ë©´ í…ìŠ¤íŠ¸ ìœ„ë¡œ ë¹ˆ ì¤„ ì¶”ê°€, ìŒìˆ˜ë©´ í…ìŠ¤íŠ¸ ì•„ë˜ë¡œ ë¹ˆ ì¤„ ì¶”ê°€
+// color: ANSI ìƒ‰ìƒ ì½”ë“œ ë¬¸ìì—´ (ì˜ˆ: ANSI_COLOR_RED)
 void print_centered(const char* text, int offset, const char* color) {
     int len = strlen(text);
-    // ÅÍ¹Ì³Î ³Êºñ¸¦ 80À¸·Î °¡Á¤ÇÏ°í Áß¾Ó Á¤·Ä ÆĞµù °è»ê
+    // í„°ë¯¸ë„ ë„ˆë¹„ë¥¼ 80ìœ¼ë¡œ ê°€ì •í•˜ê³  ì¤‘ì•™ ì •ë ¬ íŒ¨ë”© ê³„ì‚°
     int pad = (80 - len) / 2;
-    if (pad < 0) pad = 0; // ÅØ½ºÆ®°¡ 80ÀÚº¸´Ù ±æ¸é ÆĞµù ¾øÀ½
+    if (pad < 0) pad = 0; // í…ìŠ¤íŠ¸ê°€ 80ìë³´ë‹¤ ê¸¸ë©´ íŒ¨ë”© ì—†ìŒ
 
-    // offsetÀÌ À½¼öÀÎ °æ¿ì (ÅØ½ºÆ® ¾Æ·¡¿¡ ºó ÁÙ Ãß°¡)
+    // offsetì´ ìŒìˆ˜ì¸ ê²½ìš° (í…ìŠ¤íŠ¸ ì•„ë˜ì— ë¹ˆ ì¤„ ì¶”ê°€)
     if (offset < 0) {
         for (int i = 0; i < abs(offset); i++) printf("\n");
     }
 
-    // ÆĞµù ¹× »ö»ó Àû¿ëµÈ ÅØ½ºÆ® Ãâ·Â
+    // íŒ¨ë”© ë° ìƒ‰ìƒ ì ìš©ëœ í…ìŠ¤íŠ¸ ì¶œë ¥
     for (int i = 0; i < pad; i++) printf(" ");
-    printf("%s%s%s", color, text, ANSI_COLOR_RESET); // »ö»ó Àû¿ë ¹× ÃÊ±âÈ­
+    printf("%s%s%s", color, text, ANSI_COLOR_RESET); // ìƒ‰ìƒ ì ìš© ë° ì´ˆê¸°í™”
 
-    // offsetÀÌ ¾ç¼öÀÎ °æ¿ì (ÅØ½ºÆ® À§¿¡ ºó ÁÙ Ãß°¡) ¶Ç´Â ÀÏ¹İÀûÀÎ °æ¿ì
+    // offsetì´ ì–‘ìˆ˜ì¸ ê²½ìš° (í…ìŠ¤íŠ¸ ìœ„ì— ë¹ˆ ì¤„ ì¶”ê°€) ë˜ëŠ” ì¼ë°˜ì ì¸ ê²½ìš°
     if (offset >= 0) printf("\n");
 }
 
-// °ÔÀÓ UI¸¦ ±×¸®´Â ÇÔ¼ö
+// ê²Œì„ UIë¥¼ ê·¸ë¦¬ëŠ” í•¨ìˆ˜
 void draw_ui(int player_hp, int demon_hp, int focus, double remaining_time, int yokelin_active) {
-    // ÇÃ·¹ÀÌ¾î HP ¹Ù
-    printf(" ¿ë»ç HP    : " ANSI_COLOR_GREEN "[");
+    // í”Œë ˆì´ì–´ HP ë°”
+    printf(" ìš©ì‚¬ HP    : " ANSI_COLOR_GREEN "[");
     for (int i = 0; i < 20; i++) {
         if (i < (player_hp / 5)) printf("#"); else printf("-");
     }
     printf("]" ANSI_COLOR_RESET " %d/100\n", player_hp);
 
-    // Ãµ¸¶ HP ¹Ù
-    printf(" Ãµ¸¶ HP    : " ANSI_COLOR_RED "[");
+    // ì²œë§ˆ HP ë°”
+    printf(" ì²œë§ˆ HP    : " ANSI_COLOR_RED "[");
     for (int i = 0; i < 20; i++) {
         if (i < (demon_hp / 45)) printf("#"); else printf("-"); // 900 / 45 = 20
     }
     printf("]" ANSI_COLOR_RESET " %d/900\n", demon_hp);
 
-    // ÁıÁß·Â ¹Ù (¿ª¸°°Ë°á È°¼ºÈ­ ½Ã ÆÄ¶õ»öÀ¸·Î Ç¥½Ã)
-    printf(" ÁıÁß·Â(F)%s : ", yokelin_active ? ANSI_COLOR_BLUE "(¿ª¸°°Ë°á ON)" ANSI_COLOR_RESET : "");
+    // ì§‘ì¤‘ë ¥ ë°” (ì—­ë¦°ê²€ê²° í™œì„±í™” ì‹œ íŒŒë€ìƒ‰ìœ¼ë¡œ í‘œì‹œ)
+    printf(" ì§‘ì¤‘ë ¥(F)%s : ", yokelin_active ? ANSI_COLOR_BLUE "(ì—­ë¦°ê²€ê²° ON)" ANSI_COLOR_RESET : "");
     printf(ANSI_COLOR_CYAN "[");
     for (int i = 0; i < 20; i++) {
         if (i < (focus / 5)) printf("+"); else printf(" ");
@@ -314,26 +314,26 @@ void draw_ui(int player_hp, int demon_hp, int focus, double remaining_time, int 
     printf("]" ANSI_COLOR_RESET " %d/100\n", focus);
 
     printf("================================================================================\n");
-    // ³²Àº ½Ã°£ Ç¥½Ã
+    // ë‚¨ì€ ì‹œê°„ í‘œì‹œ
     if (remaining_time <= 30) {
-        printf("³²Àº ½Ã°£: " ANSI_COLOR_RED "%.0f ÃÊ" ANSI_COLOR_RESET "\n", remaining_time);
+        printf("ë‚¨ì€ ì‹œê°„: " ANSI_COLOR_RED "%.0f ì´ˆ" ANSI_COLOR_RESET "\n", remaining_time);
     }
     else {
-        printf("³²Àº ½Ã°£: %.0f ÃÊ\n", remaining_time);
+        printf("ë‚¨ì€ ì‹œê°„: %.0f ì´ˆ\n", remaining_time);
     }
     printf("================================================================================\n");
 }
 
-// ¹«ÀÛÀ§ °ø°İ ÆĞÅÏÀ» »ı¼ºÇÏ´Â ÇÔ¼ö
+// ë¬´ì‘ìœ„ ê³µê²© íŒ¨í„´ì„ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 void generate_pattern(char* buffer, int length) {
-    const char* keys = "aswd"; // »ç¿ë °¡´ÉÇÑ Å° ¸ñ·Ï
+    const char* keys = "aswd"; // ì‚¬ìš© ê°€ëŠ¥í•œ í‚¤ ëª©ë¡
     for (int i = 0; i < length; i++) {
-        buffer[i] = keys[rand() % 4]; // ¹«ÀÛÀ§·Î Å° ¼±ÅÃ
+        buffer[i] = keys[rand() % 4]; // ë¬´ì‘ìœ„ë¡œ í‚¤ ì„ íƒ
     }
-    buffer[length] = '\0'; // ¹®ÀÚ¿­ ³¡¿¡ ³Î Á¾·á ¹®ÀÚ Ãß°¡
+    buffer[length] = '\0'; // ë¬¸ìì—´ ëì— ë„ ì¢…ë£Œ ë¬¸ì ì¶”ê°€
 }
 
-// ÆĞÅÏÀ» Ãâ·ÂÇÏµÇ, ÇÃ·¹ÀÌ¾îÀÇ ÀÔ·Â¿¡ µû¶ó ÇÏÀÌ¶óÀÌÆ®¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
+// íŒ¨í„´ì„ ì¶œë ¥í•˜ë˜, í”Œë ˆì´ì–´ì˜ ì…ë ¥ì— ë”°ë¼ í•˜ì´ë¼ì´íŠ¸ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
 void print_pattern_with_highlight(const char* pattern, const char* player_input, int current_pos, int offset) {
     int len = strlen(pattern);
     int pad = (80 - len) / 2;
@@ -343,18 +343,18 @@ void print_pattern_with_highlight(const char* pattern, const char* player_input,
 
     for (int i = 0; i < pad; i++) printf(" ");
 
-    // ÆĞÅÏÀ» ÇÑ ±ÛÀÚ¾¿ Ãâ·ÂÇÏ¸é¼­ ÇÏÀÌ¶óÀÌÆ® Àû¿ë
+    // íŒ¨í„´ì„ í•œ ê¸€ìì”© ì¶œë ¥í•˜ë©´ì„œ í•˜ì´ë¼ì´íŠ¸ ì ìš©
     for (int i = 0; i < len; i++) {
         if (i < current_pos) {
-            // ÀÌ¹Ì ¿Ã¹Ù¸£°Ô ÀÔ·ÂµÈ ºÎºĞ (³ì»ö)
+            // ì´ë¯¸ ì˜¬ë°”ë¥´ê²Œ ì…ë ¥ëœ ë¶€ë¶„ (ë…¹ìƒ‰)
             printf(ANSI_COLOR_GREEN "%c" ANSI_COLOR_RESET, pattern[i]);
         }
         else if (i == current_pos) {
-            // ÇöÀç ÀÔ·ÂÇØ¾ß ÇÒ ºÎºĞ (³ë¶õ»ö)
+            // í˜„ì¬ ì…ë ¥í•´ì•¼ í•  ë¶€ë¶„ (ë…¸ë€ìƒ‰)
             printf(ANSI_COLOR_YELLOW "%c" ANSI_COLOR_RESET, pattern[i]);
         }
         else {
-            // ¾ÆÁ÷ ÀÔ·ÂÇÏÁö ¾ÊÀº ºÎºĞ (±âº» »ö»ó)
+            // ì•„ì§ ì…ë ¥í•˜ì§€ ì•Šì€ ë¶€ë¶„ (ê¸°ë³¸ ìƒ‰ìƒ)
             printf("%c", pattern[i]);
         }
     }

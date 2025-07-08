@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\smaple2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\smaple2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\SAMPLE.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C41C9555-F4EE-466A-A137-844606E59AF1}|Project1\\Project1.vcxproj|solutionrelative:Project1\\SAMPLE.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,39 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "smaple2.cpp",
-              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\smaple2.cpp",
-              "RelativeDocumentMoniker": "Project1\\smaple2.cpp",
-              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\smaple2.cpp",
-              "RelativeToolTip": "Project1\\smaple2.cpp",
-              "ViewState": "AgIAAEcBAAAAAAAAAAAowGkBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-27T01:15:30.38Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SAMPLE.cpp",
-              "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\SAMPLE.cpp",
-              "RelativeDocumentMoniker": "Project1\\SAMPLE.cpp",
-              "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\SAMPLE.cpp",
-              "RelativeToolTip": "Project1\\SAMPLE.cpp",
-              "ViewState": "AgIAADEAAAAAAAAAAAAcwFYAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-27T00:09:13.506Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "main2.cpp",
               "DocumentMoniker": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main2.cpp",
               "RelativeDocumentMoniker": "Project1\\main2.cpp",
               "ToolTip": "C:\\Users\\\uBB38\uD0DC\uD638\\Documents\\GitHub\\progamming\\main_folder\\textgame\\Project1\\main2.cpp",
               "RelativeToolTip": "Project1\\main2.cpp",
-              "ViewState": "AgIAAEQAAAAAAAAAAADwv1cAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAP4AAAAAAAAAAAAcwB8BAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-06-26T22:58:42.17Z",
+              "WhenOpened": "2025-07-07T22:58:25.234Z",
               "EditorCaption": ""
             }
           ]
